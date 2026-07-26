@@ -1,9 +1,10 @@
 package com.example.Auth_backend.controller;
+
 import com.example.Auth_backend.entity.User;
 import com.example.Auth_backend.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -15,6 +16,7 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication) {
 
