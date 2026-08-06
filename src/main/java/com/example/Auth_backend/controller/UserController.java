@@ -21,6 +21,8 @@ import org.springframework.http.HttpHeaders;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static org.springframework.util.function.SupplierUtils.resolve;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -174,14 +176,14 @@ public class UserController {
     }
 
     @GetMapping("/profile-image/{fileName}")
-    public ResponseEntity<Resource> getProfileImage(
-            @PathVariable String fileName) {
+    public ResponseEntity<Resource> getProfileImage(@PathVariable String fileName) {
 
         try {
 
             Path imagePath = Paths.get(
-                            "C:\\Users\\BHARATH\\Downloads\\Auth-backend\\Auth-backend\\src\\main\\resources\\static\\images")
-                    .resolve(fileName);
+                    System.getProperty("user.dir"),
+                    "uploads"
+            ).resolve(fileName);
 
             Resource resource = new UrlResource(imagePath.toUri());
 
